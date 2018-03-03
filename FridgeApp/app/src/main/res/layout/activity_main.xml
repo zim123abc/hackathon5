@@ -11,10 +11,29 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/searchInst"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.058" />
+
+    <EditText
+        android:id="@+id/searchBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="eg. Chicken"
+        android:inputType="textPersonName"
+        tools:layout_editor_absoluteX="69dp"
+        tools:layout_editor_absoluteY="82dp" />
+
+    <Button
+        android:id="@+id/searchButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+"
+        tools:layout_editor_absoluteX="284dp"
+        tools:layout_editor_absoluteY="77dp" />
 
 </android.support.constraint.ConstraintLayout>
