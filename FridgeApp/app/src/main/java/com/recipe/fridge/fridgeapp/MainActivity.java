@@ -12,7 +12,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    private TextView editText;
+    private EditText searchBox;
     private Button btn;
     private ListView list;
     private ArrayAdapter<String> adapter;
@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        editText = (TextView) findViewById(R.id.searchInst);
+        searchBox = (EditText) findViewById(R.id.searchBox);
         btn = (Button) findViewById(R.id.searchButton);
         list = (ListView) findViewById(R.id.searchTags);
         arrayList = new ArrayList<String>();
@@ -35,12 +35,12 @@ public class MainActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
 
-                arrayList.add(editText.getText().toString());
+                arrayList.add(searchBox.getText().toString());
                 adapter.notifyDataSetChanged();
             }
         });
     }
-
+    
 
 
 }
