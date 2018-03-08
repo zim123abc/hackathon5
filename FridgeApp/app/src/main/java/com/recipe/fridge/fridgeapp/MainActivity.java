@@ -1,5 +1,6 @@
 package com.recipe.fridge.fridgeapp;
 
+import android.app.SearchManager;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,6 +19,8 @@ public class MainActivity extends AppCompatActivity {
     private ListView list;
     private ArrayAdapter<String> adapter;
     private ArrayList<String> arrayList;
+    private String searchTags;
+    private StringBuilder searchTag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +32,9 @@ public class MainActivity extends AppCompatActivity {
         btn1 = (Button) findViewById(R.id.searchTag);
         list = (ListView) findViewById(R.id.searchTags);
         arrayList = new ArrayList<String>();
+        searchTag = new StringBuilder();
+        searchTags = new String();
+        searchTag.append("recipes ");
 
         adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, arrayList);
 
@@ -39,18 +45,25 @@ public class MainActivity extends AppCompatActivity {
 
                 arrayList.add(searchBox.getText().toString());
                 adapter.notifyDataSetChanged();
+                searchBox.setText("");
             }
         });
 
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this,results.class);
+                //Intent intent = new Intent(MainActivity.this,results.class);
 
                 for (String str : arrayList)
                 {
-                    intent.putExtra(str, str);
+                    //intent.putExtra(str, str);
+                    searchTag.append(str + " ");
                 }
+                searchTags = searchTag.toString();
+                Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
+                intent.putExtra(SearchManager.QUERY, searchTags); // query contains search string
                 startActivity(intent);
+                searchTag.setLength(8);
+                //startActivity(intent);
             }
         });
     }
