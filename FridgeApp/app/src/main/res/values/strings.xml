@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">FridgeApp</string>
     <string name="searchInst">Add tags to search for recipies</string>
+    <string name="searchStr">Search with Tags</string>
 </resources>
