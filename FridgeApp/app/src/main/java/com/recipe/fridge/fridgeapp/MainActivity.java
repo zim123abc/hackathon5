@@ -92,10 +92,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
     }
 
     private boolean isEmpty(EditText eText) {
         return eText.getText().toString().trim().length() == 0;
+
     }
 }
