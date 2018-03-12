@@ -1,14 +1,17 @@
 package com.recipe.fridge.fridgeapp;
 
 import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -37,34 +40,62 @@ public class MainActivity extends AppCompatActivity {
         searchTag.append("recipes ");
 
         adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, arrayList);
+        Context context = getApplicationContext();
+
+        final Toast nullTagToast = Toast.makeText(context, "Please enter an item",Toast.LENGTH_SHORT);
+        final Toast nullSearchToast = Toast.makeText(context, "No Items entered",Toast.LENGTH_SHORT);
+
 
         list.setAdapter(adapter);
 
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View view) {
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                adapter.remove(adapter.getItem(position));
+            }
+        });
 
-                arrayList.add(searchBox.getText().toString());
-                adapter.notifyDataSetChanged();
-                searchBox.setText("");
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (!isEmpty(searchBox)) {
+                    arrayList.add(searchBox.getText().toString());
+                    adapter.notifyDataSetChanged();
+                    searchBox.setText("");
+                }
+                else {
+                    nullTagToast.show();
+                }
             }
         });
 
         btn1.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View view) {
+            @Override
+            public void onClick(View view) {
                 //Intent intent = new Intent(MainActivity.this,results.class);
-
-                for (String str : arrayList)
-                {
-                    //intent.putExtra(str, str);
-                    searchTag.append(str + " ");
+                if (!adapter.isEmpty()) {
+                    for (String str : arrayList) {
+                        //intent.putExtra(str, str);
+                        searchTag.append(str + " ");
+                    }
+                    searchTags = searchTag.toString();
+                    Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
+                    intent.putExtra(SearchManager.QUERY, searchTags); // query contains search string
+                    startActivity(intent);
+                    searchTag.setLength(8);
+                    //startActivity(intent);
                 }
-                searchTags = searchTag.toString();
-                Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
-                intent.putExtra(SearchManager.QUERY, searchTags); // query contains search string
-                startActivity(intent);
-                searchTag.setLength(8);
-                //startActivity(intent);
+                else {
+                    nullSearchToast.show();
+                }
             }
         });
+
+    }
+
+    private boolean isEmpty(EditText eText) {
+        return eText.getText().toString().trim().length() == 0;
+
     }
 }
